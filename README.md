@@ -169,7 +169,7 @@ end fJS;
 
 ### Connectors
 
-Connector are the interfaces between the models (reactor, clarifier ...). To distinguish between inflow and outflow two connectors are build (InPipe ![inPipe](Docs/img/InPipe.png|width: 10px), OutPipe ![OutPipe](Docs/img/OutPipe.png|width: 10px)). You can imagine that you connect two compartments with a pipe where the water and it's components flowing to or from a reactor. 
+Connector are the interfaces between the models (reactor, clarifier ...). To distinguish between inflow and outflow two connectors are build (InPipe <img src="Docs/img/InPipe.png" alt="InPipe"  width="12">, OutPipe ![OutPipe](Docs/img/OutPipe.png|width: 10px)). You can imagine that you connect two compartments with a pipe where the water and it's components flowing to or from a reactor. 
 
 
 ```
