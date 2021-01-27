@@ -282,7 +282,7 @@ The primary clarifier model has a outWWSensor (OutTSSWWSensor) connector. This s
 
 In this package two mixer models are offered (Mixer2 and Mixer3). The connectors of the type **InPipe**, **In1**, **In2** etc. were mixed. The outflow is the negative sum of all inflow rates. The temperature from **In1.T** is directed to the **Out1.T**. For all 13 components mass balances were used to calculate the outflow concentrations.
 
-| ![Mixer Model](Docs/img/Mixer3.png){width=300} |
+| <img src="Docs/img/Mixer3.png" alt="Mixer Model" width=300> |
 |:--:|
 | Icon for the Mixer Model |
 
@@ -291,7 +291,7 @@ In this package two mixer models are offered (Mixer2 and Mixer3). The connectors
 
 The  **divider** divides one flow in two flows. The **InPipe** connector **In1** is dividest to the **OutPipe** connector **Out1** and **Out2**. The Temperature **In1.T** is set for both **Out1.T** and **Out2.T**. The flow rate **Out2.Q** has to be integrated for another source, like a **Pump** that is connected with **Out2**.
 
-| ![Devider Model](Docs/img/Devider.png){width=300} |
+| <img src="Docs/img/Devider.png" alt="Devider Model" width=300> |
 |:--:|
 | Icon for the Devider Model |
 
@@ -299,7 +299,7 @@ The  **divider** divides one flow in two flows. The **InPipe** connector **In1**
 
 With in this package the Activated Sludge Model No 1 ASM1 is used. This should initiate further developments (ASM2d, ASM3, P-Prec., ...). The core of the reactors is the model **ASA1_CSTR**. It has one InPipe connector **In1** and one OutPipe connector **Out1**. The only parameter is the rector Volume **V_R**. A sensor OutSensor1 is attached as well. The class **kinetic** is included with the **extends** statement to have access to the kinetic parameters. The **partial model** WWParameters is extended to have access to the classical wastewater parameters. The 8 process rates from ASM1 were defined r1 - r8 and the aeration rate rA.The the 13 mass balances for all components are formulated. This **partial model** is used for the defination of the **NitrificationTank** model and the **DenitrificationTank** model. Beside of the different icons the volumetrik mass tranfer coefficient has to be defined. For the **DenitrificationTank** model this is realised with a parameter kLa. The **NitrificationTank** model needs aeration. Therefore a **InQ** connector InQair is introduced. For the calculation of the kLa value the high of the reactor is required and implemented as a parameter. The volumetric mass transfer coefficient is than calculated with the **function** fkLa.
 
-| ![Wastewater NitrificationTank Model](Docs/img/NitrificationReactor.png){width=300} | ![Wastewater DenitrificationTank Model](Docs/img/DenitrificationReactor.png){width=300} |
+| <img src="Docs/img/NitrificationReactor.png" alt="Wastewater NitrificationTank Model" width=300> | <img src="Docs/img/DenitrificationReactor.png" alt="Wastewater DenitrificationTank Model" width=300> |
 |:--:|:--:|
 | Icon for the Nitrification Reactor | Icon for the Denitrification reactor |
 
@@ -315,7 +315,7 @@ fns: fraction of not sedimentable soldis
 
 The modell has one **InPipe** connector **In1** and two **OutPipe** conectors **Out1** for the clear water and **Out2** for the sludge. The flowrate of the sludge has to be given by a pump, optionally with a divider and two pumps. 
 
-| ![Secondary Clarifier Model](Docs/img/SecondaryClarifier.png){width=300} |
+| <img src="Docs/img/SecondaryClarifier.png" alt="Secondary Clarifier Model" width=300> |
 |:--:|
 | Icon for the Secondary Clarifier Model |
 
@@ -325,7 +325,7 @@ The modell has one **InPipe** connector **In1** and two **OutPipe** conectors **
 
 The **Centrifuge** model has a **InPipe** connector **In1** and two **OutPipe** connector **Out1** for the water and **Out2** for the sludge. The flow rate for the sludge has to be transmitted via a pump. In the sludge flow a **outWWSensor** connector is defined. This connector can be used for controlling the sludge flow. 
 
-| ![Centrifuge Model](Docs/img/Centrifuge.png){width=300} |
+| <img src="Docs/img/Centrifuge.png" alt="Centrifuge Model" width=300> |
 |:--:|
 | Icon for the Centrifuge Model |
 
@@ -334,7 +334,7 @@ The **Centrifuge** model has a **InPipe** connector **In1** and two **OutPipe** 
 
 A **pump** transport the wastewater components with a flow rate. The model is to be connected with in InPipe (In1) and Outpipe (Out1) connector. The flow rate set point is given bei the Real input Qset. With a given time constante k_DT (default value 5.0 1/d) the flow rate of the pump is reaching the setpoint flow rate. Two other parameter are used for the characterisation of the pump (Qmax and Qmin in m3/d) what is self explaining.
 
-| ![Wastewater Pump Model](Docs/img/Pump.png){width=300} |
+| <img src="Docs/img/Pump.png" alt="Wastewater Pump Model" width=300> |
 |:--:|
 | Icon for the Pump Model |
 
@@ -343,7 +343,7 @@ A **pump** transport the wastewater components with a flow rate. The model is to
 
 The **Blower** connector servers to give the air flow rate information to the **NitrificationTank** where this flow rate is used to calculate the volumetric oxygen mass transfer coefficient k<sub>L</sub>a. The model has three parameter, the maximum air flow rate (Qmax) the minimum air flow rate (Qmin) and the response time constant (k_RT). The **inQ** connector **Qset** gives the wanted air flow rate. With respect to the the time constant the the the **outQ** connector **Qair** the Qair.Q is calculated. Defaul value for k_RT is 50 d<sup>-1</sup>
 
-| ![Wastewater Blower Model](Docs/img/Blower.png){width=300} |
+| <img src="Docs/img/Blower.png" alt="Wastewater Blower Model" width=300> |
 |:--:|
 | Icon for the Blower Model |
 
@@ -352,7 +352,7 @@ The **Blower** connector servers to give the air flow rate information to the **
 
 
 
-| ![Anaerobic Digester Model](Docs/img/Digester.png){width=300} |
+| <img src="Docs/img/Digester.png" alt="Anaerobic Digester Model" width=300> |
 |:--:|
 | Icon for the Anaerobic Digester Model |
 
