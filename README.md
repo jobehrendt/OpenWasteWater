@@ -169,7 +169,7 @@ end fJS;
 
 ### Connectors
 
-Connector are the interfaces between the models (reactor, clarifier ...). To distinguish between inflow and outflow two connectors are build (InPipe <img src="Docs/img/InPipe.png" alt="InPipe"  width="12">, OutPipe ![OutPipe](Docs/img/OutPipe.png|width: 10px)). You can imagine that you connect two compartments with a pipe where the water and it's components flowing to or from a reactor. 
+Connector are the interfaces between the models (reactor, clarifier ...). To distinguish between inflow and outflow two connectors are build (InPipe <img src="Docs/img/InPipe.png" alt="InPipe"  width="12">, OutPipe <img src="Docs/img/OutPipe.png" alt="OutPipe"  width="12">). You can imagine that you connect two compartments with a pipe where the water and it's components flowing to or from a reactor. 
 
 
 ```
@@ -201,7 +201,8 @@ The **Infow** model delivers the incoming flow rate and the concentration for al
 The more advanced inflow model in call **Inflow**. It has only two parameters, temperature and a String variable Inf_File that contain the path and file name of the data for the inflow. Some examples you can find in the sub-directory *Resources/ASM1* of the wastewater package. You can find data for the inflow after primary sedimentation, according the the model of the COST Action 624 for dry, rain and storm-weather conditions. For the raw wastewater inflow these file have the name **Raw** included.
 
 
-![Inflow Model](Docs/img/WastewaterSource.png){width=300}
+<img src="Docs/img/WastewaterSource.png" alt="Inflow Model" width=300>
+
 
 ```
 model Inflow "inflow ASM1"  
@@ -271,7 +272,7 @@ The **Inflow** model has two output connector, Out1 (Outpipe) and OutSensor1 (ou
 
 The primary clarifier model base on ideas from *Otterpohl and Freund, 1992*, and is realised as an dynamic model. The retention behaviour is modeled  as a cascade of 6 CSTR's. Therefore the parameter V (volume) is required. The input to the pre-clarifier model **(PreClar)** is realised with a InPipe connector In1. The distribution of the flows is done by the sub-model **PreThick**. There the separation of solid occurs depending on the hydraulic retention time with an empirical formula. The dissolved components are not separated. The degree of separation for the particulate components is calculated and the concentration of the treated water phase is calculated (Out1.X. = (1-n_X)*In1.X.) for the six particulate components. The concentration of particulate components in the sludge flow, is calculated with a mass balance (Out2.Q * Out2.X. + In1.Q * In1.X. + Out1.Q * Out1.X. = 0;) and depend on the flow rate. The output connector **Out2** has to be connected to a pump, to provide the flow rate Out2.Q.
 
-| ![Primary Sedimentation Model](Docs/img/PrimaryClarifier.png){width=300} |
+| <img src="Docs/img/PrimaryClarifier.png" alt="Primary Sedimentation Model" width=300> |
 |:--:|
 | Icon for the Primary Clarifier Model |
 
