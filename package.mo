@@ -52,7 +52,5 @@ email: <a href=\"mailto:gerald.reichl@tu-ilmenau.de\">gerald.reichl@tu-ilmenau.d
 <p>Conversion from Modelica 1.6 to Modelica 3.2.1 performed by <a href=\"mailto:martin.sjolund@liu.se\">Martin Sjölund</a> using Dymola demo version.</p>
 <h5>version 2.0.1 (2003)</h5>
 <p>First official version of the library released at 3rd Modelica Conference.</p>
-</html>"),
-  version="2.1.0",
-  conversion(from(version="2.0.1", script="Resources/Scripts/ConvertFromWasteWater_2.0.1.mos")));
+</html>"));
 end OpenWasteWater;
