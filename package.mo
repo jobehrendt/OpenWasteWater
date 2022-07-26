@@ -1,9 +1,9 @@
 within ;
 package OpenWasteWater "Modelica WasteWater Library"
-extends Modelica.Icons.Library;
+extends Modelica.Icons.Package;
 
 
-annotation (uses(Modelica(version="3.2.2")),
+annotation (
   Window(
     x=0.45,
     y=0.01,
@@ -11,46 +11,35 @@ annotation (uses(Modelica(version="3.2.2")),
     height=0.65,
     library=1,
     autolayout=1),
-  Documentation(info="<html>
-<p>This package can be used to model and simulate biological municipal
+  Documentation(info= "<html><head></head><body><p>This package can be used to model and simulate biological municipal
 wastewater treatment plants.</p>
 
-<p>The package WasteWater provides a collection of 3 different
-international accepted (a)ctivated (s)ludge (m)odels (ASM) of different complexity,
-including models for preclarifiers and 5 different models for
-the secondary settling process.</p>
 
 <p>PS: SimulationTimeUnit for all models built with the WasteWater library is days [d].</p>
 
-<p>The WasteWater package is free software; it can be redistributed and/or modified under the terms of the <a href=\"https://modelica.org/licenses/ModelicaLicense1.1\">Modelica 1.1 license</a>.</p>
+<p>The WasteWater package is free software; it can be redistributed and/or modified under the terms of&nbsp;</p><p>&lt;a href=\"https://creativecommons.org/licenses/by/4.0/\"&gt;Creative Commons Attribution 4.0 International License.&lt;/a&gt;.</p>
 
 <p>The WasteWater package currently consists of the following subpackages:
-<ul>
+</p><ul>
 <li>ASM1            - Activated Sludge Model No.1  (models 13 wastewater components and 8 biological processes)</li>
 <li>Icons           - Icon definitions for wastewater treatment components</li>
-<li>WasteWaterUnits - unit type definitions for use with the WasteWater library</li>
+<li>ADM             - Anaerobic Digster Model</li>
+<li>ASM1P           - Activated Sludge Model No.1 with P precipitation  (models 20 wastewater components and 13 biological and chemical processes)</li>
+<li>ADMP            - Anaerobic Digster Model, dealing with P-Precipitation </li>
 </ul>
-</p>
+<p></p>
 
 <h5>Main Author</h5>
 <blockquote>
-Gerald Reichl<br />
-Technische Universitaet Ilmenau<br />
-Faculty of Informatics and Automation<br />
-Department Dynamics and Simulation of ecological Systems<br />
-P.O. Box 10 05 65<br />
-98684 Ilmenau<br />
-Germany<br />
-email: <a href=\"mailto:gerald.reichl@tu-ilmenau.de\">gerald.reichl@tu-ilmenau.de</a><br />
+Joachim Behrendt<br>
+Hamburg University of Technology<br>
+Institut of Wastewater Management and Water Protection<br>
+B-2<br>
+21073 Hamburg<br>
+Germany<br>
+email: <a href=\"mailto:j.behrendt@tuhh.de\">j.behrendt@tuhh.de</a><br>
 </blockquote>
-<p>Copyright &copy; 2000 - 2003, Gerald Reichl</p>
-</html>",revisions="<html>
-<h5>version Fork 1.0.0 (2019-02-08)</h5>
-<p>Conversion from Modelica 3.2.1 to Modelica 3.2.2 performed by <a href=\"mailto:j.behrendt@tuhh.de\">Joachim Behrendt</a> using OpenModelica 1.13.2 version.</p>
-
-<h5>version 2.1.0 (2015-01-22)</h5>
-<p>Conversion from Modelica 1.6 to Modelica 3.2.1 performed by <a href=\"mailto:martin.sjolund@liu.se\">Martin Sjölund</a> using Dymola demo version.</p>
-<h5>version 2.0.1 (2003)</h5>
-<p>First official version of the library released at 3rd Modelica Conference.</p>
-</html>"));
+<p>Copyright © 2020 - 2022, Joachim Behrendt</p>
+</body></html>", revisions = "<html>
+<h5>version 1.2.0 (2022-04-26)</h5></html>"));
 end OpenWasteWater;
