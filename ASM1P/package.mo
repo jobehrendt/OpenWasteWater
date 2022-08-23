@@ -455,7 +455,7 @@ package ASM1P "Component models for the Activated Sludge Model No.1 with P-preci
   model Inflow "inflow ASM1"
     extends OpenWasteWater.Icons.WWSource;
     parameter Real T = 15 "°C";
-    parameter String Inf_File = "../Resources/ASM1P/Inf_strm_P.txt";
+    parameter String Inf_File = "Resources/ASM1P/Inf_strm_P.txt";
     Modelica.Blocks.Sources.CombiTimeTable T_data(tableOnFile = true, fileName = Inf_File, smoothness = Modelica.Blocks.Types.Smoothness.ContinuousDerivative, extrapolation = Modelica.Blocks.Types.Extrapolation.Periodic, tableName = "t_data", columns = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}, startTime = 0.0, timeScale = 1, offset = {0}, verboseRead = true);
     OutPipe Out1 annotation(
       Placement(visible = true, transformation(origin = {98, -70}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {98, -70}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -1883,7 +1883,7 @@ package ASM1P "Component models for the Activated Sludge Model No.1 with P-preci
 
   package WWTP_Examples
     model WWTP_COST
-      OpenWasteWater.ASM1P.Inflow Inf(Inf_File = "/home/awwjb/Git/OpenWasteWater/Resources/ASM1P/Inf_strm_P.txt", T = 20) annotation(
+      OpenWasteWater.ASM1P.Inflow Inf(T = 20) annotation(
         Placement(visible = true, transformation(origin = {-90, 88}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
       OpenWasteWater.ASM1P.Mixer3 M1 annotation(
         Placement(visible = true, transformation(origin = {-64, 78}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
