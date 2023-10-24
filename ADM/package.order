@@ -7,8 +7,10 @@ OutFlow
 Csum
 biochemical
 physicochemical
-inflow_ASM
-inflow
+inflow_ASM1
+inflow_ASM3
+inflowADMonly
+WasteSludgeADM
 pH_lower_Inhibition
 pH_Inhibition
 K
@@ -21,6 +23,8 @@ OutPgas
 inBiogasSensor
 outBiogasSensor
 outflow
-outflow_ASM
+outflow_ASM1
+outflow_ASM3
 initial_values_ADM
 adm_models
+adm_only_examples

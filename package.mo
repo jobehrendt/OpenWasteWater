@@ -22,6 +22,7 @@ wastewater treatment plants.</p>
 <p>The WasteWater package currently consists of the following subpackages:
 </p><ul>
 <li>ASM1            - Activated Sludge Model No.1  (models 13 wastewater components and 8 biological processes)</li>
+<li>ASM3            - Activated Sludge Model No.3  (models 13 wastewater components and 12 biological processes)</li>
 <li>Icons           - Icon definitions for wastewater treatment components</li>
 <li>ADM             - Anaerobic Digster Model</li>
 <li>ASM1P           - Activated Sludge Model No.1 with P precipitation  (models 20 wastewater components and 13 biological and chemical processes)</li>

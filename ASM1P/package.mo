@@ -615,6 +615,41 @@ package ASM1P "Component models for the Activated Sludge Model No.1 with P-preci
     kLa = fkLa(Q = InQair.Q, V_R = V_R, H = H);
   end NitrificationTank;
 
+model NitriCascade
+  extends OpenWasteWater.Icons.NitriCascade;
+  OpenWasteWater.ASM1P.InPipe In1 annotation(
+    Placement(transformation(extent = {{-110, -10}, {-90, 10}}, rotation = 0)));
+  OpenWasteWater.ASM1P.OutPipe Out1 annotation(
+    Placement(transformation(extent = {{90, -10}, {110, 10}}, rotation = 0)));
+  OpenWasteWater.ASM1P.TechUnits.outWWSensor OutSensor1 annotation(
+    Placement(visible = true, transformation(origin = {52, 92}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {53, 53}, extent = {{-13, -13}, {13, 13}}, rotation = 0)));
+  parameter Integer N(min = 1) = 2;
+  parameter Real H = 6 "m";
+  parameter Real V_R = 1000 "m3";
+  parameter Soluble Sini(I = 30, S = 1.15, O2 = 4.0, NH = 0.2, NO = 16.9, ND = 0.9, ALK = 3.54);
+  parameter Particulate Xini(I = 78.0, S = 37.4, H = 1216.0, A = 136.0, P = 208.0, ND = 2.55);
+  NitrificationTank NTank[N](each V_R = V_R/N, each H = H, each Sini = Sini, each Xini = Xini);
+  inQ InQair annotation(
+    Placement(visible = true, transformation(origin = {0, -96}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {0, -96}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  outQ OutQair;
+equation
+  OutQair.Q = InQair.Q / N;
+  connect(In1, NTank[1].In1);
+  connect(OutQair, NTank[1].InQair);
+  if N > 1 then
+    for i in 1:N - 1 loop
+      connect(NTank[i].Out1, NTank[i + 1].In1);
+      connect(OutQair, NTank[i + 1].InQair);
+    end for;
+  end if;
+  connect(NTank[N].Out1, Out1);
+  connect(OutQair, NTank[N].InQair);
+  connect(NTank[N].OutSensor1, OutSensor1);
+
+annotation(
+    Diagram(coordinateSystem(extent = {{-130, -100}, {100, 100}})));
+end NitriCascade;
+
   model DenitrificationTank
     extends OpenWasteWater.Icons.deni;
     parameter Real kkLa = 2.0 "1/d  (for deni tanks 2 - 4 1/d)";
@@ -624,6 +659,36 @@ package ASM1P "Component models for the Activated Sludge Model No.1 with P-preci
     annotation(
       Diagram);
   end DenitrificationTank;
+
+model DeniCascade
+  extends OpenWasteWater.Icons.DeniCascade;
+  OpenWasteWater.ASM1P.InPipe In1 annotation(
+    Placement(transformation(extent = {{-110, -10}, {-90, 10}}, rotation = 0)));
+  OpenWasteWater.ASM1P.OutPipe Out1 annotation(
+    Placement(transformation(extent = {{90, -10}, {110, 10}}, rotation = 0)));
+  OpenWasteWater.ASM1P.TechUnits.outWWSensor OutSensor1 annotation(
+    Placement(visible = true, transformation(origin = {52, 92}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {53, 53}, extent = {{-13, -13}, {13, 13}}, rotation = 0)));
+
+  parameter Integer N(min = 1) = 2;
+  parameter Real V_R = 1000 "m3";
+  parameter Real kkLa = 1"1/d";
+  parameter Soluble Sini(I = 30, S = 1.15, O2 = 4.0, NH = 0.2, NO = 16.9, ND = 0.9, ALK = 3.54);
+  parameter Particulate Xini(I = 78.0, S = 37.4, H = 1216.0, A = 136.0, P = 208.0, ND = 2.55);
+  DenitrificationTank DNTank[N](each V_R = V_R/N, each kkLa = kkLa, each Sini = Sini, each Xini = Xini);
+
+equation
+  connect(In1, DNTank[1].In1);
+  if N > 1 then
+    for i in 1:N - 1 loop
+      connect(DNTank[i].Out1, DNTank[i + 1].In1);
+    end for;
+  end if;
+  connect(DNTank[N].Out1, Out1);
+  connect(DNTank[N].OutSensor1, OutSensor1);
+
+annotation(
+    Diagram(coordinateSystem(extent = {{-130, -100}, {100, 100}})));
+end DeniCascade;
 
   partial model ASM1_CSTR
     OpenWasteWater.ASM1P.InPipe In1 annotation(
@@ -2215,25 +2280,13 @@ package ASM1P "Component models for the Activated Sludge Model No.1 with P-preci
         Placement(visible = true, transformation(origin = {-70, 76}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
       OpenWasteWater.ASM1P.Effluent Effluent1 annotation(
         Placement(visible = true, transformation(origin = {84, -46}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      OpenWasteWater.ASM1P.DenitrificationTank DN1(Sini = Soluble(I = 30, S = 5.15, O2 = 4.0, NH = 15.2, NO = 16.9, ND = 0.9, ALK = 3.54, P = 1.0, Fe2 = 0.1, Fe3 = 0.1, Al3 = 0.0), Xini = Particulate(I = 78.0, S = 37.4, H = 1216.0, A = 136.0, P = 208.0, ND = 2.55, FeP = 40.0, FeOH = 34.0, AlP = 0.0, AlOH = 0.0)) annotation(
-        Placement(visible = true, transformation(origin = {0, 64}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      OpenWasteWater.ASM1P.DenitrificationTank DN2(Sini = Soluble(I = 30, S = 5.15, O2 = 4.0, NH = 15.2, NO = 16.9, ND = 0.9, ALK = 3.54, P = 1.0, Fe2 = 0.1, Fe3 = 0.1, Al3 = 0.0), Xini = Particulate(I = 78.0, S = 37.4, H = 1216.0, A = 136.0, P = 208.0, ND = 2.55, FeP = 40.0, FeOH = 34.0, AlP = 0.0, AlOH = 0.0)) annotation(
-        Placement(visible = true, transformation(origin = {34, 64}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      OpenWasteWater.ASM1P.NitrificationTank N1(Sini = Soluble(I = 30, S = 5.15, O2 = 4.0, NH = 15.2, NO = 1.9, ND = 0.9, ALK = 3.54, P = 1.0, Fe2 = 0.1, Fe3 = 0.1, Al3 = 0.0), V_R = 1333, Xini = Particulate(I = 78.0, S = 37.4, H = 1216.0, A = 136.0, P = 208.0, ND = 2.55, FeP = 40.0, FeOH = 34.0, AlP = 0.0, AlOH = 0.0)) annotation(
-        Placement(visible = true, transformation(origin = {-40, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      OpenWasteWater.ASM1P.NitrificationTank N2(Sini = Soluble(I = 30, S = 5.15, O2 = 4.0, NH = 15.2, NO = 16.9, ND = 0.9, ALK = 3.54, P = 1.0, Fe2 = 0.1, Fe3 = 0.1, Al3 = 0.0), Xini = Particulate(I = 78.0, S = 37.4, H = 1216.0, A = 136.0, P = 208.0, ND = 2.55, FeP = 40.0, FeOH = 34.0, AlP = 0.0, AlOH = 0.0)) annotation(
-        Placement(visible = true, transformation(origin = {4, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
       OpenWasteWater.ASM1P.NitrificationTank N3(Sini = Soluble(I = 30, S = 5.15, O2 = 4.0, NH = 15.2, NO = 16.9, ND = 0.9, ALK = 3.54, P = 1.0, Fe2 = 0.1, Fe3 = 0.1, Al3 = 0.0), V_R = 1333, Xini = Particulate(I = 78.0, S = 37.4, H = 1216.0, A = 136.0, P = 208.0, ND = 2.55, FeP = 40.0, FeOH = 34.0, AlP = 0.0, AlOH = 0.0)) annotation(
         Placement(visible = true, transformation(origin = {50, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      OpenWasteWater.ASM1P.TechUnits.Blower B1 annotation(
-        Placement(visible = true, transformation(origin = {-40, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      OpenWasteWater.ASM1P.TechUnits.Blower B2 annotation(
+      OpenWasteWater.ASM1P.TechUnits.Blower B2(Qmax = 50000)  annotation(
         Placement(visible = true, transformation(origin = {6, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
       OpenWasteWater.ASM1P.TechUnits.Blower B3 annotation(
         Placement(visible = true, transformation(origin = {52, -12}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-      OpenWasteWater.ASM1P.TechUnits.SetQ setQ1(Q = 15000) annotation(
-        Placement(visible = true, transformation(origin = {-18, -14}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
-      OpenWasteWater.ASM1P.TechUnits.SetQ setQ2(Q = 15000) annotation(
+      OpenWasteWater.ASM1P.TechUnits.SetQ setQ2(Q = 30000) annotation(
         Placement(visible = true, transformation(origin = {30, -14}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
       OpenWasteWater.ASM1P.TechUnits.SetQ setQ3(Q = 5000) annotation(
         Placement(visible = true, transformation(origin = {76, -14}, extent = {{-6, -6}, {6, 6}}, rotation = 0)));
@@ -2259,29 +2312,21 @@ package ASM1P "Component models for the Activated Sludge Model No.1 with P-preci
         Placement(visible = true, transformation(origin = {36, -62}, extent = {{6, -6}, {-6, 6}}, rotation = 0)));
       OpenWasteWater.ASM1P.TechUnits.SetQ setQ6(Q = 55000) annotation(
         Placement(visible = true, transformation(origin = {64, 42}, extent = {{6, -6}, {-6, 6}}, rotation = 0)));
+  OpenWasteWater.ASM1P.NitriCascade nitriCascade2 annotation(
+        Placement(visible = true, transformation(origin = {5, 20}, extent = {{-23, -10}, {23, 10}}, rotation = 0)));
+  OpenWasteWater.ASM1P.DeniCascade deniCascade2 annotation(
+        Placement(visible = true, transformation(origin = {-50, 21}, extent = {{-24, -13}, {24, 13}}, rotation = 0)));
+  Dosing Dosing1 annotation(
+        Placement(visible = true, transformation(origin = {2, 84}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Mixer2 mixer2 annotation(
+        Placement(visible = true, transformation(origin = {40, 64}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     equation
-      connect(B1.Qair, N1.InQair) annotation(
-        Line(points = {{-40, 0}, {6, 0}}, color = {78, 154, 6}));
-      connect(B2.Qair, N2.InQair) annotation(
-        Line(points = {{6, 0}, {4, 0}, {4, 10}}, color = {78, 154, 6}));
       connect(B3.Qair, N3.InQair) annotation(
         Line(points = {{52, -2}, {50, -2}, {50, 10}}, color = {78, 154, 6}));
-      connect(setQ1.OutQ1, B1.Qset) annotation(
-        Line(points = {{-24, -14}, {-30, -14}, {-30, -12}}, color = {78, 154, 6}));
       connect(setQ2.OutQ1, B2.Qset) annotation(
         Line(points = {{24, -14}, {16, -14}, {16, -12}}, color = {78, 154, 6}));
       connect(setQ3.OutQ1, B3.Qset) annotation(
         Line(points = {{70, -14}, {62, -14}}, color = {78, 154, 6}));
-      connect(M3.Out1, DN1.In1) annotation(
-        Line(points = {{-30, 64}, {-10, 64}}));
-      connect(DN1.Out1, DN2.In1) annotation(
-        Line(points = {{10, 64}, {24, 64}}));
-      connect(DN2.Out1, N1.In1) annotation(
-        Line(points = {{44, 64}, {56, 64}, {56, 34}, {-62, 34}, {-62, 20}, {-50, 20}}));
-      connect(N1.Out1, N2.In1) annotation(
-        Line(points = {{-30, 20}, {-6, 20}}));
-      connect(N2.Out1, N3.In1) annotation(
-        Line(points = {{14, 20}, {40, 20}}));
       connect(N3.Out1, S1.In1) annotation(
         Line(points = {{60, 20}, {70, 20}}));
       connect(S1.Out1, P_Rec.In1) annotation(
@@ -2308,8 +2353,22 @@ package ASM1P "Component models for the Activated Sludge Model No.1 with P-preci
         Line(points = {{-60, 70}, {-50, 70}, {-50, 68}}));
       connect(P_Rec.Out1, M3.In2) annotation(
         Line(points = {{80, 76}, {78, 76}, {78, 94}, {-94, 94}, {-94, 64}, {-50, 64}}));
-      connect(P_RS.Out1, M3.In3) annotation(
-        Line(points = {{-56, -64}, {-82, -64}, {-82, 60}, {-50, 60}}));
+  connect(P_RS.Out1, M3.In3) annotation(
+        Line(points = {{-56, -64}, {-90, -64}, {-90, 60}, {-50, 60}}));
+  connect(nitriCascade2.Out1, N3.In1) annotation(
+        Line(points = {{28, 20}, {40, 20}}));
+  connect(B2.Qair, nitriCascade2.InQair) annotation(
+        Line(points = {{6, 0}, {6, 10}}, color = {78, 154, 6}));
+  connect(deniCascade2.Out1, nitriCascade2.In1) annotation(
+        Line(points = {{-26, 22}, {-18, 22}, {-18, 20}}));
+  connect(M3.Out1, mixer2.In1) annotation(
+        Line(points = {{-30, 64}, {30, 64}, {30, 62}}));
+  connect(Dosing1.Out1, mixer2.In2) annotation(
+        Line(points = {{12, 78}, {22, 78}, {22, 66}, {30, 66}}));
+  connect(mixer2.Out1, deniCascade2.In1) annotation(
+        Line(points = {{50, 64}, {58, 64}, {58, 54}, {-86, 54}, {-86, 22}, {-74, 22}}));
+  connect(Inf1.OutSensor1, Dosing1.SensorInfDos) annotation(
+        Line(points = {{-62, 80}, {-40, 80}, {-40, 88}, {-6, 88}, {-6, 86}}, color = {78, 154, 6}));
       annotation(
         Icon(coordinateSystem(initialScale = 0.5)),
         experiment(StartTime = 0, StopTime = 14, Tolerance = 1e-06, Interval = 0.02));
